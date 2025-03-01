@@ -37,6 +37,11 @@
         </div>
     </div>
 
-    <script src="logic.js"></script>
+    <script defer src="logic.js"></script>
+    <script>
+        // Initialize Vercel Analytics queue if not already initialized
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

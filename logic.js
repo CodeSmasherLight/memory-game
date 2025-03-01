@@ -210,8 +210,34 @@ function endGame() {
     setTimeout(() => {
         finalTimeDisplay.textContent = timeDisplay.textContent;
         finalMovesDisplay.textContent = moves;
+        
+        const minTime = localStorage.getItem('minTime');
+        const minTimeElement = document.createElement('p');
+        
+        if (minTime === null || seconds < parseInt(minTime)) {
+            localStorage.setItem('minTime', seconds);
+            minTimeElement.textContent = "You are the fastest to solve this till now!";
+        } else {
+            minTimeElement.textContent = `Previous fastest time: ${formatTime(parseInt(minTime))}`;
+        }
+        
+        // Clear previous message if any
+        const previousMessage = winModal.querySelector('.modal-content p.message');
+        if (previousMessage) {
+            previousMessage.remove();
+        }
+        
+        minTimeElement.classList.add('message');
+        winModal.querySelector('.modal-content').appendChild(minTimeElement);
         winModal.style.display = 'flex';
     }, 500);
+}
+
+// format time in MM:SS format
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
 // event listeners here
